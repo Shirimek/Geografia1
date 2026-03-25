@@ -2,838 +2,458 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Klipy - cebulo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoMistrz | Kurs Geografii Rozszerzonej</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 40px;
-            background: #111;
-            color: #eee;
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-        }
-        h1 {
-            margin-top: 40px;
-            z-index: 10;
-            position: relative;
-        }
-        #scWrap {
-            max-width: 900px;
-            margin: 20px auto;
-            z-index: 10;
-            position: relative;
-        }
-        #fbWrap {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.1) rotate(720deg);
-            width: 600px;
-            height: 600px;
-            border: none;
-            opacity: 0;
-            transition: transform 1.2s ease-out, opacity 1.2s ease-out;
-            z-index: 999;
-        }
-        #message {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #bbb;
-            position: relative;
-            z-index: 10;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .hide-cursor, .hide-cursor * {
-            cursor: none !important;
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --locked: #334155;
         }
 
-/* OBRAZEK G4SKIN */
-        #rightSideImage {
-    position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    max-width: 300px;
-    max-height: 80vh;
-    z-index: 1000;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    pointer-events: auto;
-}
-        /* CAPTCHA overlay */
-        #captchaOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 11000;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 50px;
         }
-        #captchaBox {
-            background: #141414;
-            color: #eee;
-            border-radius: 12px;
-            padding: 22px;
-            width: 460px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-            text-align: center;
-            font-family: inherit;
+
+        /* Header & Progress */
+        header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--locked);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        #captchaBox h2 {
-            margin:0 0 10px 0;
-            font-size:18px;
-        }
-        #captchaQuestion {
-            font-size:16px;
-            margin:12px 0;
-            color:#ddd;
-        }
-        #captchaInput, #minecraftAnswer, #cs2Input, #szamanInput, #timeInput {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #0e0e0e;
-            color: #fff;
-            font-size:16px;
-            box-sizing: border-box;
-        }
-        #captchaControls {
-            margin-top:12px;
-            display:flex;
-            gap:8px;
-            justify-content:center;
-        }
-        .btn {
-            padding: 8px 12px;
-            border-radius:8px;
-            border: none;
-            cursor: pointer;
-            font-weight:600;
-        }
-        .btn-verify {
-            background:#3fbf7f;
-            color:#042;
-        }
-        .btn-refresh {
-            background:#ffb84d;
-            color:#331;
-        }
-        .btn-info {
-            background:#2f4fff;
-            color:#fff;
-        }
-        .error {
-            color:#ff7b7b;
-            margin-top:8px;
-            font-size:13px;
-            min-height:18px;
-        }
-        #humanCheckSection {
-            margin-top:14px;
-            display:none;
-            align-items:center;
-            gap:10px;
-            justify-content:center;
-        }
-        #humanCheckbox {
-            width:20px;height:20px;
-            accent-color:#3fbf7f;
-            cursor:pointer;
-        }
-        #balloonGame {
-            margin-top:12px;
-            width: 360px;
-            height: 240px;
-            background: linear-gradient(180deg,#0f1720,#081018);
-            border-radius:8px;
-            border: 1px solid rgba(255,255,255,0.04);
-            position: relative;
+
+        .progress-container {
+            width: 200px;
+            height: 10px;
+            background: var(--locked);
+            border-radius: 5px;
             overflow: hidden;
-            display: none;
-            margin-left:auto;
-            margin-right:auto;
+            margin-top: 5px;
         }
-        .balloon {
-            position: absolute;
-            width: 48px;
-            height: 64px;
-            border-radius: 50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            user-select:none;
+
+        #progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Lesson List */
+        .lesson-list { display: grid; gap: 15px; }
+
+        .lesson-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
             cursor: pointer;
-            transition: transform 0.12s ease;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            transition: transform 0.2s, background 0.2s;
+            border: 1px solid transparent;
+            position: relative;
         }
-        .balloon:active {
-            transform: scale(0.9);
+
+        .lesson-card:hover:not(.locked) {
+            transform: translateX(10px);
+            background: #2d3a4f;
+            border-color: var(--accent);
         }
-        .balloon::after{
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            width: 2px;
-            height: 16px;
-            background: rgba(0,0,0,0.12);
-            transform: translateX(-50%);
-            border-radius:1px;
+
+        .lesson-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(1);
         }
-        #balloonCounter {
-            margin-top:10px;
-            color:#cfe;
-            font-weight:700;
-            display:none;
+
+        .lesson-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: var(--accent);
+            margin-right: 20px;
         }
-        #minecraftQuiz {
-            display:none;
-            text-align:left;
-            margin-top:12px;
-        }
-        #minecraftQuiz label {
-            display:block;
-            margin:6px 0;
-            cursor:pointer;
-        }
-        #timeQuiz {
-            display:none;
-            margin-top:12px;
-        }
-        #cs2Quiz, #szamanQuiz {
-            display:none;
-            margin-top:12px;
-        }
-        .no-scroll {
-            overflow: hidden !important;
-            height: 100vh;
-        }
-        /* Nowy styl dla przycisku URUCHOM MACHINE */
-        #machineButton {
-            display: none;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ff5500;
-            color: white;
+
+        .lesson-info { flex-grow: 1; }
+        .lesson-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
+        .lesson-info span { font-size: 0.8rem; color: var(--text-muted); }
+
+        .status-icon { font-size: 1.2rem; margin-left: 15px; }
+
+        /* Lesson View */
+        #lesson-view { display: none; }
+        .back-btn {
+            background: none;
             border: none;
-            padding: 12px 20px;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .content-body {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .content-body h2 { margin-bottom: 20px; color: var(--accent); border-bottom: 2px solid var(--locked); padding-bottom: 10px; }
+        .content-body p { margin-bottom: 15px; text-align: justify; }
+
+        /* Quiz Styles */
+        .quiz-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .question-box { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--locked); }
+        .options { margin-top: 10px; }
+        
+        .option-label {
+            display: block;
+            background: #2d3a4f;
+            padding: 12px;
+            margin: 8px 0;
             border-radius: 8px;
-            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-label:hover { background: #3e4e66; }
+        .option-label input { margin-right: 10px; }
+
+        .correct { background: var(--success) !important; color: white; }
+        .wrong { background: var(--error) !important; color: white; }
+
+        #check-btn {
+            background: var(--accent);
+            color: var(--bg-dark);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(255,85,0,0.4);
-            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1.1rem;
         }
-        #machineButton:hover {
-            background: #ff7733;
-            transform: scale(1.05);
+
+        #result-msg {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: none;
         }
-        /* Styl dla sekcji z klipami */
-#clips {
-    display: none;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    overflow-y: auto;
-    max-height: 100vh;
-}
-#clips h1 {
-    color: #ff5500;
-    margin-bottom: 20px;
-    text-align: left;
-}
-.videos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-.video-item {
-    background: #222;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.video-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(255,85,0,0.2);
-}
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-.video-info {
-    padding: 15px;
-}
-.video-info h2 {
-    color: #eee;
-    margin: 0 0 8px 0;
-    font-size: 16px;
-    line-height: 1.3;
-}
-.video-info p {
-    margin: 0;
-    color: #bbb;
-    font-size: 14px;
-}
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
+
     </style>
 </head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5486175208501620"
-     crossorigin="anonymous"></script>
 <body>
-    <img id="rightSideImage" src="./G4_1_EN.png" alt="Promocja">
-    <h1>WERYFIKACJA ANTY-DDOS</h1>
-    <div id="message"><b>PO WYKONANIU CAPTCHY, NACIŚNIJ SPACJĘ A NASTĘPNIE PRZYCISK W PRAWYM GÓRNYM ROGU<b></div>
-    <div id="scWrap"></div>
-    <div id="fbWrap"></div>
-    
-    <!-- Przycisk URUCHOM MACHINE -->
-    <button id="machineButton">URUCHOM MACHINE</button>
-    
-    <!-- Sekcja z klipami -->
-    <div id="clips">
-    <h1>Klipy cebulka300</h1>
-    <div class="videos-grid">
-        <div class="video-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/6d7HCDqedlg" title="Kutavon 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>Znany "kutavon"</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
+
+<header>
+    <div>
+        <h1>GeoMistrz <i class="fas fa-globe-europe"></i></h1>
+        <p>Liceum: Geografia Rozszerzona</p>
+    </div>
+    <div style="text-align: right;">
+        <span id="progress-text">Postęp: 0%</span>
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="list-view" class="lesson-list">
         </div>
 
-        <div class="video-item">
-            <div class="video-container">
-                <iframe width="995" height="746" src="https://www.youtube.com/embed/6JuxqCBtpSM" title="negev" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>Negev</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
-        </div>
+    <div id="lesson-view" class="fade-in">
+        <button class="back-btn" onclick="showListView()"><i class="fas fa-arrow-left"></i> Powrót do listy</button>
+        <div id="lesson-content" class="content-body"></div>
         
-        <div class="video-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/DDZsX7TIIgk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>kutvos zasmarkony</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
-        </div>
-
-        <div class="video-item">
-            <div class="video-container">
-                <iframe width="995" height="746" src="https://www.youtube.com/embed/DTvGh7096Y4" title="pałac" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>kutvos zasmarkony</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
-        </div>
-        
-        <div class="video-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/ykAHaOBYS3s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>rage bait</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
-        </div>
-
-        <div class="video-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/6d7HCDqedlg" title="Kutavon 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="video-info">
-                <h2>Znany "kutavon"</h2>
-                <p>Autor <b>Julus</b></p>
-            </div>
+        <div class="quiz-section">
+            <h3>Sprawdź swoją wiedzę</h3>
+            <div id="quiz-container"></div>
+            <button id="check-btn" onclick="checkQuiz()">Sprawdź odpowiedzi</button>
+            <div id="result-msg"></div>
         </div>
     </div>
 </div>
 
-    <!-- CAPTCHA overlay -->
-    <div id="captchaOverlay" aria-modal="true" role="dialog">
-        <div id="captchaBox" role="document" aria-labelledby="captchaTitle">
-            <h2 id="captchaTitle">Weryfikacja</h2>
-            <div id="captchaInstruction">Rozwiąż proste zadanie, aby potwierdzić, że nie jesteś botem.</div>
-            <div id="captchaQuestion" aria-live="polite"></div>
-            <input id="captchaInput" type="text" inputmode="numeric" autocomplete="off" aria-label="Odpowiedź na pytanie" />
-            <div id="captchaControls">
-                <button id="verifyBtn" class="btn btn-verify">Sprawdź</button>
-                <button id="refreshBtn" class="btn btn-refresh">Nowe zadanie</button>
-                <button id="hintBtn" class="btn btn-info" title="Podpowiedź">Hint</button>
-            </div>
-            <div class="error" id="captchaError" aria-live="assertive"></div>
-            <div id="humanCheckSection" aria-hidden="true">
-                <input id="humanCheckbox" type="checkbox" aria-label="I am human checkbox" />
-                <label for="humanCheckbox" style="color:#ddd; font-weight:600">Kliknij tutaj: Jestem człowiekiem</label>
-            </div>
-            <div id="balloonGame" aria-hidden="true" aria-label="Gra z balonami — kliknij 10 balonów"></div>
-            <div id="balloonCounter">Balony zbite: <span id="balloonCount">0</span>/10</div>
-            <div id="minecraftQuiz">
-                <p>Który materiał jest potrzebny do stworzenia łóżka w Minecraft?</p>
-                <label><input type="radio" name="minecraftAnswer" value="wood"> Drewno</label>
-                <label><input type="radio" name="minecraftAnswer" value="iron"> Żelazo</label>
-                <label><input type="radio" name="minecraftAnswer" value="wool"> Wełna</label>
-                <label><input type="radio" name="minecraftAnswer" value="stone"> Kamień</label>
-                <button id="minecraftVerify" class="btn btn-verify">Sprawdź</button>
-                <div class="error" id="minecraftError"></div>
-            </div>
-            <div id="timeQuiz">
-                <p>Ile sekund ma 24 godziny?</p>
-                <input id="timeInput" type="text" inputmode="numeric" />
-                <button id="timeVerify" class="btn btn-verify">Sprawdź</button>
-                <div class="error" id="timeError"></div>
-            </div>
-            <div id="cs2Quiz">
-                <p>Napisz najgorszego gracza CS2:</p>
-                <input id="cs2Input" type="text" />
-                <button id="cs2Verify" class="btn btn-verify">Sprawdź</button>
-                <div class="error" id="cs2Error"></div>
-            </div>
-            <div id="szamanQuiz">
-                <p>Napisz, kto jest najsilniejszym człowiekiem świata i najlepszym graczem CS2:</p>
-                <input id="szamanInput" type="text" />
-                <button id="szamanVerify" class="btn btn-verify">Sprawdź</button>
-                <div class="error" id="szamanError"></div>
-            </div>
-        </div>
-    </div>
+<script>
+    // Baza danych lekcji
+    const lessonsData = [
+        {
+            id: 1,
+            title: "Ziemia jako planeta",
+            date: "Rozdział 1.1",
+            icon: "fa-earth-americas",
+            content: `
+                <h2>Kształt i wymiary Ziemi</h2>
+                <p>Ziemia nie jest idealną kulą. Przez wieki poglądy na jej kształt ewoluowały. Dziś wiemy, że Ziemia jest <strong>geoidą</strong> – bryłą, której powierzchnia w każdym miejscu jest prostopadła do pionu (kierunku siły ciężkości). W uproszczeniu kartograficznym przyjmuje się model elipsoidy obrotowej.</p>
+                <p>Promień równikowy Ziemi wynosi około 6378 km, natomiast promień biegunowy jest o ok. 21 km krótszy. Ta różnica wynika z siły odśrodkowej powstałej podczas ruchu obrotowego planety wokół własnej osi. Powierzchnia Ziemi to ok. 510 mln km², z czego ponad 70% zajmują oceany.</p>
+                <h3>Układ Słoneczny</h3>
+                <p>Ziemia jest trzecią planetą od Słońca w Układzie Słonecznym. Należy do grupy planet typu ziemskiego (skalistych), charakteryzujących się dużą gęstością i stałą skorupą. Jej unikalną cechą jest obecność wody w trzech stanach skupienia oraz atmosfera bogata w tlen, co umożliwiło rozwój życia. Magnetosfera Ziemi chroni nas przed szkodliwym promieniowaniem kosmicznym i wiatrem słonecznym.</p>
+                <p>Kluczowym elementem geografii matematycznej jest siatka geograficzna – układ południków i równoleżników wyznaczony na modelu Ziemi, który pozwala na precyzyjne określenie współrzędnych dowolnego punktu na globie.</p>
+            `,
+            questions: [
+                { q: "Jak nazywa się rzeczywisty kształt Ziemi?", options: ["Kula", "Geoida", "Elipsa", "Stożek"], correct: 1 },
+                { q: "Promień równikowy jest dłuższy od biegunowego.", options: ["Prawda", "Fałsz"], correct: 0 },
+                { q: "Ile wynosi powierzchnia Ziemi?", options: ["150 mln km²", "300 mln km²", "510 mln km²", "1 mld km²"], correct: 2 },
+                { q: "Ziemia jest czwartą planetą od Słońca.", options: ["Prawda", "Fałsz"], correct: 1 },
+                { q: "Co chroni Ziemię przed wiatrem słonecznym?", options: ["Księżyc", "Magnetosfera", "Ozon", "Chmury"], correct: 1 }
+            ]
+        },
+        {
+            id: 2,
+            title: "Ruchy Ziemi i ich następstwa",
+            date: "Rozdział 1.2",
+            icon: "fa-sync",
+            content: `
+                <h2>Ruch obrotowy i obiegowy</h2>
+                <p>Ziemia wykonuje dwa główne rodzaje ruchów: obrotowy (wokół własnej osi) oraz obiegowy (wokół Słońca). Ruch obrotowy odbywa się z zachodu na wschód i trwa 23 godziny 56 minut i 4 sekundy (doba gwiazdowa). Następstwem tego ruchu jest przede wszystkim dobowa zmiana dnia i nocy.</p>
+                <p>Ruch obiegowy odbywa się po orbicie o kształcie elipsy, a pełne okrążenie trwa 365 dni, 5 godzin, 48 minut i 46 sekund. Ponieważ oś ziemska jest nachylona do płaszczyzny ekliptyki pod kątem ok. 66°33', skutkuje to cykliczną zmianą oświetlenia różnych fragmentów Ziemi w ciągu roku.</p>
+                <h3>Następstwa ruchów</h3>
+                <p>Głównym skutkiem ruchu obiegowego jest występowanie astronomicznych pór roku oraz zmiana długości dnia i nocy w zależności od szerokości geograficznej. Ruch obrotowy natomiast powoduje powstawanie siły Coriolisa, która odchyla kierunek poruszania się ciał (np. wiatrów i prądów morskich) – na półkuli północnej w prawo, a na południowej w lewo.</p>
+                <p>Warto pamiętać o dniach przesileń i równonocy, które wyznaczają początki astronomicznych pór roku. Na przykład 22 czerwca Słońce góruje w zenicie nad Zwrotnikiem Raka.</p>
+            `,
+            questions: [
+                { q: "W którą stronę obraca się Ziemia?", options: ["Ze wschodu na zachód", "Z zachodu na wschód"], correct: 1 },
+                { q: "Siła Coriolisa odchyla wiatry na półkuli północnej w:", options: ["Lewo", "Prawo", "W ogóle nie odchyla", "W dół"], correct: 1 },
+                { q: "Ile trwa pełny obieg Ziemi wokół Słońca?", options: ["24h", "365 dni", "365 dni i ok. 6h", "30 dni"], correct: 2 },
+                { q: "Pory roku wynikają z nachylenia osi Ziemi.", options: ["Prawda", "Fałsz"], correct: 0 },
+                { q: "Nad jakim równoleżnikiem góruje słońce 21 marca?", options: ["Równik", "Zwrotnik Raka", "Zwrotnik Koziorożca", "Biegun"], correct: 0 }
+            ]
+        },
+        {
+            id: 3,
+            title: "Współrzędne geograficzne",
+            date: "Rozdział 1.3",
+            icon: "fa-map-location-dot",
+            content: `
+                <h2>Szerokość i długość geograficzna</h2>
+                <p>Współrzędne geograficzne to podstawowe narzędzie nawigacji. Dzielą się na szerokość (φ) oraz długość (λ) geograficzną.</p>
+                <p><strong>Szerokość geograficzna</strong> to kąt między płaszczyzną równika a promieniem ziemskim przechodzącym przez dany punkt. Przyjmuje wartości od 0° (równik) do 90° (bieguny) N (północna) lub S (południowa).</p>
+                <p><strong>Długość geograficzna</strong> to kąt dwuścienny między półpłaszczyzną południka zerowego (Greenwich) a półpłaszczyzną południka przechodzącego przez dany punkt. Przyjmuje wartości od 0° do 180° E (wschodnia) lub W (zachodnia).</p>
+                <h3>Praktyczne zastosowanie</h3>
+                <p>Znajomość współrzędnych pozwala wyznaczać czas słoneczny oraz strefy czasowe. Jeden stopień długości geograficznej odpowiada 4 minutom czasu słonecznego. Dzięki temu świat podzielono na 24 strefy czasowe, każda po 15 stopni długości geograficznej.</p>
+            `,
+            questions: [
+                { q: "Jaka jest maksymalna wartość szerokości geograficznej?", options: ["90°", "180°", "360°", "45°"], correct: 0 },
+                { q: "Południk 0° przechodzi przez dzielnicę Londynu:", options: ["Soho", "Greenwich", "Chelsea", "Wimbledon"], correct: 1 },
+                { q: "1 stopień długości to ile minut czasu?", options: ["1 min", "4 min", "15 min", "60 min"], correct: 1 },
+                { q: "Równoleżniki są różnej długości.", options: ["Prawda", "Fałsz"], correct: 0 },
+                { q: "Długość geograficzna może być północna.", options: ["Prawda", "Fałsz"], correct: 1 }
+            ]
+        },
+        {
+            id: 4,
+            title: "Budowa wnętrza Ziemi",
+            date: "Rozdział 2.1",
+            icon: "fa-volcano",
+            content: `
+                <h2>Warstwy Ziemi</h2>
+                <p>Wnętrze naszej planety składa się z koncentrycznych warstw różniących się właściwościami fizycznymi i składem chemicznym. Podział ten znamy głównie dzięki badaniom fal sejsmicznych.</p>
+                <p>1. <strong>Skorupa ziemska</strong>: Najbardziej zewnętrzna, sztywna warstwa. Dzieli się na kontynentalną (grubszą) i oceaniczną (cieńszą, ale gęstszą).<br>
+                2. <strong>Płaszcz Ziemi</strong>: Stanowi ok. 80% objętości planety. Dzieli się na płaszcz górny (z plastyczną astenosferą) i dolny.<br>
+                3. <strong>Jądro Ziemi</strong>: Składa się głównie z żelaza i niklu. Jądro zewnętrzne jest płynne, a wewnętrzne stałe (mimo ogromnej temperatury, ze względu na kolosalne ciśnienie).</p>
+                <p>Granice między warstwami nazywamy nieciągłościami (np. Moho między skorupą a płaszczem).</p>
+            `,
+            questions: [
+                { q: "Która warstwa jest płynna?", options: ["Skorupa", "Płaszcz górny", "Jądro zewnętrzne", "Jądro wewnętrzne"], correct: 2 },
+                { q: "Główny składnik jądra to:", options: ["Krzem i glin", "Żelazo i nikiel", "Wapń", "Magnez"], correct: 1 },
+                { q: "Nieciągłość Moho oddziela skorupę od płaszcza.", options: ["Prawda", "Fałsz"], correct: 0 },
+                { q: "Skorupa oceaniczna jest grubsza od kontynentalnej.", options: ["Prawda", "Fałsz"], correct: 1 }
+            ]
+        }
+        // Można dodać kolejne lekcje zgodnie z listą...
+    ];
 
-    <script>
-        // --- Konfetti i spacja ---
-        function shootConfetti() {
-            const w = window.innerWidth, h = window.innerHeight;
-            for(let i=0;i<300;i++){
-                const el = document.createElement('div');
-                el.style.position='fixed';
-                el.style.left = Math.random()*w + 'px';
-                el.style.top = '-20px';
-                const size = 10 + Math.random()*20;
-                el.style.width = size+'px';
-                el.style.height = size+'px';
-                el.style.background = ['#ff4757','#ff6b81','#ffd166','#6ee7b7','#7ad0ff'][Math.floor(Math.random()*5)];
-                el.style.opacity = 0.95;
-                el.style.transform = 'rotate('+ (Math.random()*360) +'deg)';
-                el.style.borderRadius = '2px';
-                el.style.zIndex = 9999;
-                el.style.transition = 'transform 3s linear, top 3s linear, left 3s linear, opacity 1s';
-                document.body.appendChild(el);
-                requestAnimationFrame(()=>{
-                    el.style.top = (h + 50*Math.random()) + 'px';
-                    el.style.left = (parseFloat(el.style.left) + (Math.random()*400-200)) + 'px';
-                    el.style.transform = 'rotate('+ (Math.random()*1080) +'deg)';
-                });
-                setTimeout(()=> el.remove(), 4500 + Math.random()*1500);
+    // Logika aplikacji
+    let currentLesson = null;
+    let unlockedLessons = JSON.parse(localStorage.getItem('geo_unlocked')) || [1];
+
+    function init() {
+        renderLessonList();
+        updateProgress();
+    }
+
+    function renderLessonList() {
+        const listContainer = document.getElementById('list-view');
+        listContainer.innerHTML = '';
+
+        lessonsData.forEach((lesson, index) => {
+            const isLocked = !unlockedLessons.includes(lesson.id);
+            const isCompleted = unlockedLessons.includes(lesson.id + 1);
+            
+            const card = document.createElement('div');
+            card.className = `lesson-card ${isLocked ? 'locked' : ''} fade-in`;
+            card.onclick = () => !isLocked && openLesson(lesson.id);
+
+            card.innerHTML = `
+                <div class="lesson-icon">
+                    <i class="fas ${isLocked ? 'fa-lock' : lesson.icon}"></i>
+                </div>
+                <div class="lesson-info">
+                    <span>${lesson.date}</span>
+                    <h3>Lekcja ${lesson.id}: ${lesson.title}</h3>
+                </div>
+                <div class="status-icon">
+                    ${isCompleted ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' : 
+                      (isLocked ? '' : '<i class="fas fa-chevron-right"></i>')}
+                </div>
+            `;
+            listContainer.appendChild(card);
+        });
+    }
+
+    function openLesson(id) {
+        currentLesson = lessonsData.find(l => l.id === id);
+        document.getElementById('list-view').style.display = 'none';
+        document.getElementById('lesson-view').style.display = 'block';
+        
+        document.getElementById('lesson-content').innerHTML = currentLesson.content;
+        
+        const quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = '';
+        
+        currentLesson.questions.forEach((q, qIdx) => {
+            const qBox = document.createElement('div');
+            qBox.className = 'question-box';
+            qBox.innerHTML = `<p><strong>Q${qIdx+1}:</strong> ${q.q}</p>
+                <div class="options">
+                    ${q.options.map((opt, oIdx) => `
+                        <label class="option-label">
+                            <input type="radio" name="q${qIdx}" value="${oIdx}">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>`;
+            quizContainer.appendChild(qBox);
+        });
+
+        document.getElementById('check-btn').style.display = 'block';
+        document.getElementById('result-msg').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
+    function showListView() {
+        document.getElementById('list-view').style.display = 'grid';
+        document.getElementById('lesson-view').style.display = 'none';
+        renderLessonList();
+    }
+
+    function checkQuiz() {
+        const questions = currentLesson.questions;
+        let score = 0;
+        
+        questions.forEach((q, qIdx) => {
+            const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
+            const labels = document.querySelectorAll(`input[name="q${qIdx}"]`);
+            
+            labels.forEach(input => {
+                const label = input.parentElement;
+                const val = parseInt(input.value);
+                
+                if(val === q.correct) label.classList.add('correct');
+                if(selected && parseInt(selected.value) === val && val !== q.correct) {
+                    label.classList.add('wrong');
+                }
+                input.disabled = true;
+            });
+
+            if(selected && parseInt(selected.value) === q.correct) score++;
+        });
+
+        const percent = (score / questions.length) * 100;
+        const msg = document.getElementById('result-msg');
+        msg.style.display = 'block';
+        msg.scrollIntoView({ behavior: 'smooth' });
+
+        if(percent >= 60) {
+            msg.innerHTML = `<span style="color:var(--success)">Zaliczone! ✅ Wynik: ${score}/${questions.length}</span>`;
+            if(!unlockedLessons.includes(currentLesson.id + 1) && currentLesson.id < lessonsData.length) {
+                unlockedLessons.push(currentLesson.id + 1);
+                localStorage.setItem('geo_unlocked', JSON.stringify(unlockedLessons));
             }
+        } else {
+            msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 60%)</span>`;
         }
 
-        let activated = false;
-        let captchaCompleted = false;
+        document.getElementById('check-btn').style.display = 'none';
+        updateProgress();
+    }
 
-        document.body.addEventListener('keydown', function(e){
-            if(e.code === 'Space' && !activated){
-                activated = true;
-                document.body.classList.add('hide-cursor');
-                shootConfetti();
-                const scWrap = document.getElementById('scWrap');
-                scWrap.innerHTML = `<iframe id="scPlayer" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1947896447&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-                <div style="font-size:10px;color:#cccccc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px;">
-                    <a href="https://soundcloud.com/n0xii" target="_blank" style="color:#ccc;text-decoration:none">fshi</a> · <a href="https://soundcloud.com/n0xii/zydzi-hardstyle-full-og" target="_blank" style="color:#ccc;text-decoration:none">ZYDZI HARDSTYLE KRZYCZE GŁOŚNO OG</a>
-                </div>`;
-                const fbWrap = document.getElementById('fbWrap');
-                fbWrap.innerHTML = `<if12xt=true&width=500" width="500" height="533" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
-                setTimeout(()=>{
-                    fbWrap.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
-                    fbWrap.style.opacity = 1;
-                    let pulseCount = 0;
-                    const pulseInterval = setInterval(()=>{
-                        fbWrap.style.transform = 'translate(-50%, -50%) scale(1.05) rotate(0deg)';
-                        setTimeout(()=> fbWrap.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)', 200);
-                        pulseCount++;
-                        if(pulseCount >= 4) clearInterval(pulseInterval);
-                    }, 400);
-                }, 300);
-                document.getElementById('message').textContent = "Konfetti + muzyka + obrazek! 🎉";
-                
-                // Pokaż przycisk tylko jeśli captcha została ukończona
-                if (captchaCompleted) {
-                    document.getElementById('machineButton').style.display = 'block';
-                }
+    function updateProgress() {
+        const total = lessonsData.length;
+        const completed = unlockedLessons.length - 1;
+        const percent = Math.round((completed / total) * 100);
+        document.getElementById('progress-bar').style.width = percent + '%';
+        document.getElementById('progress-text').innerText = `Postęp: ${percent}%`;
+    }
+
+    // Dodaj brakujące tematy jako placeholder, aby struktura była widoczna
+    function mockRemainingLessons() {
+        const topics = [
+            "Skały i minerały", "Procesy geologiczne", "Atmosfera", "Klimat", 
+            "Wody na Ziemi", "Gleby i Biosfera", "Ludność świata", "Urbanizacja", 
+            "Gospodarka", "Globalizacja"
+        ];
+        topics.forEach((t, i) => {
+            if (lessonsData.length < 14) {
+                lessonsData.push({
+                    id: i + 5,
+                    title: t,
+                    date: "Rozdział " + (i + 3),
+                    icon: "fa-book",
+                    content: "<h2>" + t + "</h2><p>Treść lekcji w przygotowaniu. Jest to przykładowy widok kolejnego modułu kursu geografii rozszerzonej.</p>",
+                    questions: [{q: "Czy to jest lekcja o " + t + "?", options: ["Tak", "Nie"], correct: 0}]
+                });
             }
         });
+    }
 
-        // --- CAPTCHA ---
-        (function(){
-            const overlay = document.getElementById('captchaOverlay');
-            const input = document.getElementById('captchaInput');
-            const qEl = document.getElementById('captchaQuestion');
-            const err = document.getElementById('captchaError');
-            const verifyBtn = document.getElementById('verifyBtn');
-            const refreshBtn = document.getElementById('refreshBtn');
-            const hintBtn = document.getElementById('hintBtn');
-            const humanSection = document.getElementById('humanCheckSection');
-            const humanCheckbox = document.getElementById('humanCheckbox');
-            const balloonGame = document.getElementById('balloonGame');
-            const balloonCounterWrap = document.getElementById('balloonCounter');
-            const balloonCountEl = document.getElementById('balloonCount');
-            const minecraftQuiz = document.getElementById('minecraftQuiz');
-            const minecraftError = document.getElementById('minecraftError');
-            const minecraftVerify = document.getElementById('minecraftVerify');
-            const timeQuiz = document.getElementById('timeQuiz');
-            const timeInput = document.getElementById('timeInput');
-            const timeVerify = document.getElementById('timeVerify');
-            const cs2Quiz = document.getElementById('cs2Quiz');
-            const cs2Error = document.getElementById('cs2Error');
-            const cs2Input = document.getElementById('cs2Input');
-            const cs2Verify = document.getElementById('cs2Verify');
-            const szamanQuiz = document.getElementById('szamanQuiz');
-            const szamanError = document.getElementById('szamanError');
-            const szamanInput = document.getElementById('szamanInput');
-            const szamanVerify = document.getElementById('szamanVerify');
-            let correctAnswer=null, attempts=0;
+    mockRemainingLessons();
+    init();
+</script>
 
-            function genQuestion(){
-                const a = Math.floor(Math.random()*9)+1;
-                const b = Math.floor(Math.random()*9)+1;
-                const ops=['+','-','×'];
-                const op=ops[Math.floor(Math.random()*ops.length)];
-                let qText, ans;
-                if(op==='+'){
-                    qText=`${a} + ${b}`;
-                    ans=a+b;
-                } else if(op==='-'){
-                    const big=Math.max(a,b),small=Math.min(a,b);
-                    qText=`${big}-${small}`;
-                    ans=big-small;
-                } else{
-                    qText=`${a} × ${b}`;
-                    ans=a*b;
-                }
-                correctAnswer=ans;
-                qEl.textContent=`Ile to jest: ${qText} ?`;
-                input.value='';
-                err.textContent='';
-                input.focus();
-            }
-
-            function showOverlay(){
-                overlay.style.display='flex';
-                document.body.classList.add('no-scroll');
-                window.addEventListener('keydown', blockWhileCaptcha, true);
-                window.addEventListener('click', blockWhileCaptcha, true);
-                genQuestion();
-                humanSection.style.display='none';
-                humanSection.setAttribute('aria-hidden','true');
-                humanCheckbox.checked=false;
-                balloonGame.style.display='none';
-                balloonGame.setAttribute('aria-hidden','true');
-                balloonCounterWrap.style.display='none';
-                balloonCountEl.textContent='0';
-                minecraftQuiz.style.display='none';
-                timeQuiz.style.display='none';
-                cs2Quiz.style.display='none';
-                szamanQuiz.style.display='none';
-            }
-
-            function hideOverlay(){
-                overlay.style.display='none';
-                document.body.classList.remove('no-scroll');
-                window.removeEventListener('keydown', blockWhileCaptcha, true);
-                window.removeEventListener('click', blockWhileCaptcha, true);
-            }
-
-            function blockWhileCaptcha(e){
-                if(!overlay||overlay.style.display==='none') return;
-                if(e.target && overlay.contains(e.target)) return;
-                e.stopPropagation();
-                e.preventDefault();
-            }
-
-            verifyBtn.addEventListener('click', ()=>{
-                const val=parseInt(input.value.trim(),10);
-                if(!Number.isFinite(val)){
-                    err.textContent='To musi być liczba.';
-                    return;
-                }
-                if(val===correctAnswer){
-                    showHumanCheckbox();
-                } else {
-                    err.textContent='Źle — spróbuj jeszcze raz.';
-                    attempts++;
-                    if(attempts>=3){
-                        attempts=0;
-                        genQuestion();
-                        err.textContent='Dajemy nowe zadanie.';
-                    }
-                }
-            });
-
-            refreshBtn.addEventListener('click', ()=>{
-                attempts=0;
-                genQuestion();
-            });
-
-            hintBtn.addEventListener('click', ()=>{
-                err.textContent='Podpowiedź: wynik to ' + correctAnswer;
-                setTimeout(()=> err.textContent='',2500);
-            });
-
-            input.addEventListener('keydown',function(e){
-                if(e.key==='Enter'){
-                    e.preventDefault();
-                    verifyBtn.click();
-                }
-            });
-
-            function showHumanCheckbox(){
-                qEl.style.display='none';
-                input.style.display='none';
-                document.getElementById('captchaControls').style.display='none';
-                humanSection.style.display='flex';
-                humanSection.setAttribute('aria-hidden','false');
-                humanCheckbox.focus();
-                err.textContent='Kliknij checkbox żeby potwierdzić.';
-            }
-
-            humanCheckbox.addEventListener('change',function(){
-                if(humanCheckbox.checked){
-                    showBalloonGame();
-                }
-            });
-
-            // --- BALLOONS ---
-            let popped=0, TOTAL_BALLOONS=10;
-
-            function randomBetween(min,max){
-                return Math.floor(Math.random()*(max-min+1))+min;
-            }
-
-            function createBalloon(id){
-                const b=document.createElement('div');
-                b.className='balloon';
-                b.dataset.id=id;
-                const colors=['#ff6b81','#ffd166','#6ee7b7','#7ad0ff','#ff4757','#c084fc'];
-                b.style.background=colors[Math.floor(Math.random()*colors.length)];
-                const pw=balloonGame.clientWidth-60;
-                const ph=balloonGame.clientHeight-80;
-                const left=randomBetween(8, Math.max(8,pw));
-                const top=randomBetween(8, Math.max(8,ph));
-                b.style.left=left+'px';
-                b.style.top=top+'px';
-                b.style.zIndex=50+id;
-                b.addEventListener('click',function popHandler(){
-                    b.style.transition='transform 0.15s ease, opacity 0.15s ease';
-                    b.style.transform='scale(0.2) translateY(-10px)';
-                    b.style.opacity='0';
-                    setTimeout(()=>{
-                        if(b.parentNode) b.parentNode.removeChild(b);
-                    },160);
-                    popped++;
-                    balloonCountEl.textContent=String(popped);
-                    setTimeout(()=>{
-                        generateBalloonsUntil(TOTAL_BALLOONS);
-                    },250);
-                    if(popped>=TOTAL_BALLOONS){
-                        setTimeout(()=>{
-                            showMinecraftQuiz();
-                        },200);
-                    }
-                },{once:true});
-                return b;
-            }
-
-            function generateBalloonsUntil(n){
-                const existing=balloonGame.querySelectorAll('.balloon').length;
-                const toCreate=Math.min(n-existing, Math.max(0,TOTAL_BALLOONS-popped-existing));
-                for(let i=0;i<toCreate;i++){
-                    const id=Date.now()+Math.random()*10000+i;
-                    const bal=createBalloon(id);
-                    balloonGame.appendChild(bal);
-                }
-                if(balloonGame.querySelectorAll('.balloon').length===0 && popped<TOTAL_BALLOONS){
-                    setTimeout(()=>generateBalloonsUntil(n),300);
-                }
-            }
-
-            function showBalloonGame(){
-                humanSection.style.display='none';
-                balloonGame.style.display='block';
-                balloonGame.setAttribute('aria-hidden','false');
-                balloonCounterWrap.style.display='block';
-                balloonCountEl.textContent='0';
-                popped=0;
-                generateBalloonsUntil(TOTAL_BALLOONS);
-            }
-
-            /* MINECRAFT QUIZ */
-            function showMinecraftQuiz(){
-                balloonGame.style.display='none';
-                balloonGame.setAttribute('aria-hidden','true');
-                balloonCounterWrap.style.display='none';
-                minecraftQuiz.style.display='block';
-                minecraftError.textContent='';
-            }
-
-            minecraftVerify.addEventListener('click',function(){
-                const sel = document.querySelector('input[name="minecraftAnswer"]:checked');
-                if(!sel){
-                    minecraftError.textContent='Wybierz odpowiedź.';
-                    return;
-                }
-                if(sel.value==='wood'||sel.value==='wool'){
-                    minecraftError.textContent='';
-                    showTimeQuiz();
-                } else {
-                    minecraftError.textContent='Źle, spróbuj jeszcze raz.';
-                }
-            });
-
-            /* TIME QUIZ */
-            function showTimeQuiz(){
-                minecraftQuiz.style.display='none';
-                timeQuiz.style.display='block';
-                timeError.textContent='';
-                timeInput.value='';
-                timeInput.focus();
-            }
-
-            timeVerify.addEventListener('click',function(){
-                const val=parseInt(timeInput.value,10);
-                if(val===86400){
-                    showCs2Quiz();
-                } else {
-                    timeError.textContent='Źle, spróbuj jeszcze raz.';
-                }
-            });
-
-            /* CS2 QUIZ */
-            function showCs2Quiz(){
-                timeQuiz.style.display='none';
-                cs2Quiz.style.display='block';
-                cs2Input.focus();
-            }
-
-            cs2Verify.addEventListener('click',function(){
-                const val=cs2Input.value.trim().toLowerCase();
-                if(val==='jadlopodawca'){
-                    cs2Quiz.style.display='none';
-                    showSzamanQuiz();
-                } else {
-                    cs2Error.textContent='Źle, spróbuj jeszcze raz.';
-                }
-            });
-
-            /* SZAMAN QUIZ */
-            function showSzamanQuiz(){
-                szamanQuiz.style.display='block';
-                szamanInput.focus();
-            }
-
-            szamanVerify.addEventListener('click', function(){
-                const val = szamanInput.value.trim().toLowerCase();
-                if(val === 'wazon'){
-                    alert('To nie jest pytanie o najgorszego gracza cs2 i suchoklatesa, za kare wracasz do 1 pytania');
-                    // ukryj wszystkie quizy
-                    szamanQuiz.style.display = 'none';
-                    cs2Quiz.style.display = 'none';
-                    minecraftQuiz.style.display = 'none';
-                    timeQuiz.style.display = 'none';
-                    // pokaż tylko pierwsze pytanie matematyczne
-                    const input = document.getElementById('captchaInput');
-                    const qEl = document.getElementById('captchaQuestion');
-                    const err = document.getElementById('captchaError');
-                    input.style.display = 'block';
-                    qEl.style.display = 'block';
-                    document.getElementById('captchaControls').style.display = 'flex';
-                    err.textContent = '';
-                    input.value = '';
-                    input.focus();
-                    // zresetuj human checkbox i balony
-                    document.getElementById('humanCheckSection').style.display = 'none';
-                    document.getElementById('balloonGame').style.display = 'none';
-                    document.getElementById('balloonCounter').style.display = 'none';
-                    // wygeneruj nowe matematyczne pytanie
-                    const correctAnswer = Math.floor(Math.random()*9+1) + Math.floor(Math.random()*9+1);
-                    // prosta wersja, możesz dopasować jak w genQuestion()
-                    qEl.textContent = `Ile to jest ${Math.floor(Math.random()*9+1)} + ${Math.floor(Math.random()*9+1)} ?`;
-                } else if(val === 'szaman'){
-                    szamanQuiz.style.display='none';
-                    finishCaptcha();
-                } else {
-                    szamanError.textContent='Źle, spróbuj jeszcze raz.';
-                }
-            });
-
-            function finishCaptcha(){
-                captchaCompleted = true;
-                hideOverlay();
-            }
-
-            document.addEventListener('DOMContentLoaded',function(){
-                setTimeout(showOverlay,80);
-            });
-        })();
-
-        // Obsługa przycisku URUCHOM MACHINE
-        document.getElementById('machineButton').addEventListener('click', function() {
-            // Ukryj wszystkie elementy strony
-            document.querySelector('h1').style.display = 'none';
-            document.getElementById('message').style.display = 'none';
-            document.getElementById('scWrap').style.display = 'none';
-            document.getElementById('fbWrap').style.display = 'none';
-            document.getElementById('machineButton').style.display = 'none';
-            
-            // Pokaż sekcję z klipami
-            document.getElementById('clips').style.display = 'block';
-            
-            // Zmień tytuł strony
-            document.title = "Klipy cebulka300";
-        });
-    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
