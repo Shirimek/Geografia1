@@ -825,14 +825,14 @@
         const msg = document.getElementById('result-msg');
         msg.style.display = 'block';
 
-        if(percent >= 60) {
+        if(percent >= 80) {
             msg.innerHTML = `<span style="color:var(--success)">Zaliczone! ✅ Wynik: ${score}/${questions.length}</span>`;
             if(!unlockedLessons.includes(currentLesson.id + 1) && currentLesson.id < lessonsData.length) {
                 unlockedLessons.push(currentLesson.id + 1);
                 localStorage.setItem('geo_unlocked', JSON.stringify(unlockedLessons));
             }
         } else {
-            msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 60%)</span>`;
+            msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 80%)</span>`;
         }
 
         document.getElementById('check-btn').style.display = 'none';
