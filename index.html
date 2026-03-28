@@ -720,6 +720,111 @@
             ]
         }
     ];
+    // Logika odblokowywania lekcji (zapisuje postęp w przeglądarce)
+let unlockedLessons = JSON.parse(localStorage.getItem('geo_unlocked')) || [1];
+
+// Funkcja wyświetlająca listę lekcji na stronie głównej
+function renderLessons() {
+    const list = document.getElementById('list-view');
+    list.innerHTML = lessonsData.map(lesson => {
+        const isLocked = !unlockedLessons.includes(lesson.id);
+        return `
+            <div class="lesson-card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : `showLesson(${lesson.id})`}">
+                <div class="lesson-icon"><i class="fas ${lesson.icon}"></i></div>
+                <div class="lesson-info">
+                    <h3>${lesson.title}</h3>
+                    <span>${lesson.date}</span>
+                </div>
+                ${isLocked ? '<i class="fas fa-lock status-icon"></i>' : '<i class="fas fa-chevron-right status-icon"></i>'}
+            </div>
+        `;
+    }).join('');
+    updateProgress();
+}
+
+// Funkcja otwierająca konkretną lekcję
+function showLesson(id) {
+    const currentLesson = lessonsData.find(l => l.id === id);
+    window.currentLesson = currentLesson; // Zapamiętaj aktywną lekcję
+    document.getElementById('list-view').style.display = 'none';
+    document.getElementById('lesson-view').style.display = 'block';
+    document.getElementById('lesson-content').innerHTML = currentLesson.content;
+    
+    // Generowanie quizu
+    const quizCont = document.getElementById('quiz-container');
+    quizCont.innerHTML = currentLesson.questions.map((q, qIdx) => `
+        <div class="question-box">
+            <p><strong>${qIdx + 1}. ${q.q}</strong></p>
+            <div class="options">
+                ${q.options.map((opt, oIdx) => `
+                    <label class="option-label">
+                        <input type="radio" name="q${qIdx}" value="${oIdx}"> ${opt}
+                    </label>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+    
+    document.getElementById('result-msg').style.display = 'none';
+    document.getElementById('check-btn').style.display = 'block';
+    window.scrollTo(0,0);
+}
+
+// Funkcja powrotu do listy
+function showListView() {
+    document.getElementById('list-view').style.display = 'grid';
+    document.getElementById('lesson-view').style.display = 'none';
+    renderLessons();
+}
+
+// Funkcja sprawdzania quizu
+function checkQuiz() {
+    let score = 0;
+    const questions = window.currentLesson.questions;
+    
+    questions.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        const options = document.querySelectorAll(`input[name="q${idx}"]`);
+        
+        options.forEach(input => {
+            const label = input.parentElement;
+            if(parseInt(input.value) === q.correct) label.classList.add('correct');
+            if(selected && parseInt(selected.value) === parseInt(input.value) && parseInt(input.value) !== q.correct) {
+                label.classList.add('wrong');
+            }
+            input.disabled = true;
+        });
+        if(selected && parseInt(selected.value) === q.correct) score++;
+    });
+
+    const percent = (score / questions.length) * 100;
+    const msg = document.getElementById('result-msg');
+    msg.style.display = 'block';
+
+    if(percent >= 60) {
+        msg.innerHTML = `<span style="color:var(--success)">Zaliczone! ✅ Wynik: ${score}/${questions.length}</span>`;
+        if(!unlockedLessons.includes(window.currentLesson.id + 1) && window.currentLesson.id < lessonsData.length) {
+            unlockedLessons.push(window.currentLesson.id + 1);
+            localStorage.setItem('geo_unlocked', JSON.stringify(unlockedLessons));
+        }
+    } else {
+        msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 60%)</span>`;
+    }
+    document.getElementById('check-btn').style.display = 'none';
+    updateProgress();
+}
+
+// Aktualizacja paska postępu
+function updateProgress() {
+    const total = lessonsData.length;
+    const completed = unlockedLessons.length - 1;
+    const percent = Math.round((completed / total) * 100);
+    document.getElementById('progress-bar').style.width = percent + '%';
+    document.getElementById('progress-text').innerText = `Postęp: ${percent}%`;
+}
+
+// START: Wywołanie funkcji przy załadowaniu strony
+renderLessons();
 
     let currentLesson = null;
     let unlockedLessons = JSON.parse(localStorage.getItem('geo_unlocked')) || [1];
