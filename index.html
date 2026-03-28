@@ -134,6 +134,8 @@
         }
 
         .question-box { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--locked); }
+        .options { margin-top: 10px; }
+        
         .option-label {
             display: block;
             background: #2d3a4f;
@@ -145,6 +147,8 @@
         }
 
         .option-label:hover { background: #3e4e66; }
+        .option-label input { margin-right: 10px; }
+
         .correct { background: var(--success) !important; color: white; }
         .wrong { background: var(--error) !important; color: white; }
 
@@ -173,6 +177,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in { animation: fadeIn 0.4s ease forwards; }
+
     </style>
 </head>
 <body>
@@ -219,7 +224,6 @@
                 <p>Promień równikowy Ziemi wynosi około 6378 km, natomiast promień biegunowy jest o ok. 21 km krótszy. Ta różnica wynika z siły odśrodkowej powstałej podczas ruchu obrotowego planety wokół własnej osi. Powierzchnia Ziemi to ok. 510 mln km², z czego ponad 70% zajmują oceany.</p>
                 <h3>Układ Słoneczny</h3>
                 <p>Ziemia jest trzecią planetą od Słońca w Układzie Słonecznym. Należy do grupy planet typu ziemskiego (skalistych), charakteryzujących się dużą gęstością i stałą skorupą. Jej unikalną cechą jest obecność wody w trzech stanach skupienia oraz atmosfera bogata w tlen, co umożliwiło rozwój życia. Magnetosfera Ziemi chroni nas przed szkodliwym promieniowaniem kosmicznym i wiatrem słonecznym.</p>
-                <p>Kluczowym elementem geografii matematycznej jest siatka geograficzna – układ południków i równoleżników wyznaczony na modelu Ziemi, który pozwala na precyzyjne określenie współrzędnych dowolnego punktu na globie.</p>
             `,
             questions: [
                 { q: "Jak nazywa się rzeczywisty kształt Ziemi?", options: ["Kula", "Geoida", "Elipsa", "Stożek"], correct: 1 },
@@ -236,11 +240,10 @@
             icon: "fa-sync",
             content: `
                 <h2>Ruch obrotowy i obiegowy</h2>
-                <p>Ziemia wykonuje dwa główne rodzaje ruchów: obrotowy (wokół własnej osi) oraz obiegowy (wokół Słońca). Ruch obrotowy odbywa się z zachodu na wschód i trwa 23 godziny 56 minut i 4 sekundy (doba gwiazdowa). Następstwem tego ruchu jest przede wszystkim dobowa zmiana dnia i nocy.</p>
-                <p>Ruch obiegowy odbywa się po orbicie o kształcie elipsy, a pełne okrążenie trwa 365 dni, 5 godzin, 48 minut i 46 sekund. Ponieważ oś ziemska jest nachylona do płaszczyzny ekliptyki pod kątem ok. 66°33', skutkuje to cykliczną zmianą oświetlenia różnych fragmentów Ziemi w ciągu roku.</p>
+                <p>Ziemia wykonuje dwa główne rodzaje ruchów: obrotowy (wokół własnej osi) oraz obiegowy (wokół Słońca). Ruch obrotowy trwa 23 godziny 56 minut i 4 sekundy. Następstwem tego ruchu jest przede wszystkim dobowa zmiana dnia i nocy.</p>
+                <p>Ruch obiegowy odbywa się po orbicie o kształcie elipsy, a pełne okrążenie trwa 365 dni, 5 godzin, 48 minut i 46 sekund. Oś ziemska jest nachylona do płaszczyzny ekliptyki pod kątem ok. 66°33'.</p>
                 <h3>Następstwa ruchów</h3>
-                <p>Głównym skutkiem ruchu obiegowego jest występowanie astronomicznych pór roku oraz zmiana długości dnia i nocy w zależności od szerokości geograficznej. Ruch obrotowy natomiast powoduje powstawanie siły Coriolisa, która odchyla kierunek poruszania się ciał (np. wiatrów i prądów morskich) – na półkuli północnej w prawo, a na południowej w lewo.</p>
-                <p>Warto pamiętać o dniach przesileń i równonocy, które wyznaczają początki astronomicznych pór roku. Na przykład 22 czerwca Słońce góruje w zenicie nad Zwrotnikiem Raka.</p>
+                <p>Głównym skutkiem ruchu obiegowego jest występowanie astronomicznych pór roku. Ruch obrotowy natomiast powoduje powstawanie siły Coriolisa, która odchyla kierunek poruszania się ciał.</p>
             `,
             questions: [
                 { q: "W którą stronę obraca się Ziemia?", options: ["Ze wschodu na zachód", "Z zachodu na wschód"], correct: 1 },
@@ -258,10 +261,8 @@
             content: `
                 <h2>Szerokość i długość geograficzna</h2>
                 <p>Współrzędne geograficzne to podstawowe narzędzie nawigacji. Dzielą się na szerokość (φ) oraz długość (λ) geograficzną.</p>
-                <p><strong>Szerokość geograficzna</strong> to kąt między płaszczyzną równika a promieniem ziemskim przechodzącym przez dany punkt. Przyjmuje wartości od 0° (równik) do 90° (bieguny) N (północna) lub S (południowa).</p>
-                <p><strong>Długość geograficzna</strong> to kąt dwuścienny między półpłaszczyzną południka zerowego (Greenwich) a półpłaszczyzną południka przechodzącego przez dany punkt. Przyjmuje wartości od 0° do 180° E (wschodnia) lub W (zachodnia).</p>
-                <h3>Praktyczne zastosowanie</h3>
-                <p>Znajomość współrzędnych pozwala wyznaczać czas słoneczny oraz strefy czasowe. Jeden stopień długości geograficznej odpowiada 4 minutom czasu słonecznego. Dzięki temu świat podzielono na 24 strefy czasowe, każda po 15 stopni długości geograficznej.</p>
+                <p><strong>Szerokość geograficzna</strong> to kąt między płaszczyzną równika a promieniem ziemskim. Przyjmuje wartości od 0° do 90° N lub S.</p>
+                <p><strong>Długość geograficzna</strong> to kąt dwuścienny między południkiem zerowym a południkiem danego punktu. Przyjmuje wartości od 0° do 180° E lub W.</p>
             `,
             questions: [
                 { q: "Jaka jest maksymalna wartość szerokości geograficznej?", options: ["90°", "180°", "360°", "45°"], correct: 0 },
@@ -275,14 +276,12 @@
             id: 4,
             title: "Budowa wnętrza Ziemi",
             date: "Rozdział 2.1",
-            icon: "fa-earth-americas",
+            icon: "fa-volcano",
             content: `
                 <h2>Warstwy Ziemi</h2>
-                <p>Wnętrze naszej planety składa się z koncentrycznych warstw różniących się właściwościami fizycznymi i składem chemicznym. Podział ten znamy głównie dzięki badaniom fal sejsmicznych.</p>
-                <p>1. <strong>Skorupa ziemska</strong>: Najbardziej zewnętrzna, sztywna warstwa. Dzieli się na kontynentalną (grubszą) i oceaniczną (cieńszą, ale gęstszą).<br>
-                2. <strong>Płaszcz Ziemi</strong>: Stanowi ok. 80% objętości planety. Dzieli się na płaszcz górny (z plastyczną astenosferą) i dolny.<br>
-                3. <strong>Jądro Ziemi</strong>: Składa się głównie z żelaza i niklu. Jądro zewnętrzne jest płynne, a wewnętrzne stałe (mimo ogromnej temperatury, ze względu na kolosalne ciśnienie).</p>
-                <p>Granice między warstwami nazywamy nieciągłościami (np. Moho między skorupą a płaszczem).</p>
+                <p>1. <strong>Skorupa ziemska</strong>: Najbardziej zewnętrzna warstwa. Dzieli się na kontynentalną i oceaniczną.</p>
+                <p>2. <strong>Płaszcz Ziemi</strong>: Stanowi ok. 80% objętości planety.</p>
+                <p>3. <strong>Jądro Ziemi</strong>: Składa się głównie z żelaza i niklu. Jądro zewnętrzne jest płynne, a wewnętrzne stałe.</p>
             `,
             questions: [
                 { q: "Która warstwa jest płynna?", options: ["Skorupa", "Płaszcz górny", "Jądro zewnętrzne", "Jądro wewnętrzne"], correct: 2 },
@@ -298,18 +297,15 @@
             icon: "fa-gem",
             content: `
                 <h2>Skarby skorupy ziemskiej</h2>
-                <p>Wszystko, co widzimy pod stopami – od monumentalnych Tatr po piasek na plaży – składa się z minerałów i skał. <strong>Minerał</strong> to pierwiastek lub związek chemiczny powstały w sposób naturalny, posiadający określoną strukturę krystaliczną (np. diament czy kwarc). <strong>Skała</strong> natomiast to naturalne skupisko jednego lub wielu minerałów.</p>
-                <p>Skały dzielimy na trzy główne grupy ze względu na ich genezę. <strong>Skały magmowe</strong> powstają w wyniku krzepnięcia magmy (głębinowe, np. granit o strukturze jawno-krystalicznej) lub lawy (wylewne, np. bazalt o strukturze skrytokrystalicznej). <strong>Skały osadowe</strong> tworzą się na powierzchni Ziemi poprzez gromadzenie się materiału. Mogą być okruchowe (piaskowiec), pochodzenia organicznego (węgiel, wapienie) lub chemicznego (sól kamienna). Trzecią grupą są <strong>skały metamorficzne</strong>, które powstają, gdy istniejące już skały zostają poddane ogromnemu ciśnieniu i temperaturze w głębi Ziemi, co zmienia ich strukturę (np. marmur powstały z wapienia).</p>
-                <p>Ciekawostką jest obieg materii w przyrodzie: każda skała może stać się inną w procesie cyklu skalnego. Co więcej, twardość minerałów określamy za pomocą 10-stopniowej skali Mohsa, gdzie 1 to miękki talk, a 10 to najtwardszy diament.</p>
+                <p><strong>Minerał</strong> to pierwiastek lub związek chemiczny powstały w sposób naturalny. <strong>Skała</strong> to naturalne skupisko minerałów.</p>
+                <p><strong>Skały magmowe</strong>: Powstają z magmy (np. granit) lub lawy (np. bazalt). <strong>Skały osadowe</strong>: Powstają przez gromadzenie materiału (np. piaskowiec, sól). <strong>Skały metamorficzne</strong>: Powstają pod wpływem ciśnienia (np. marmur).</p>
             `,
             questions: [
-                { q: "Która skała jest przykładem skały magmowej głębinowej?", options: ["Bazalt", "Granit", "Wapień", "Marmur"], correct: 1 },
-                { q: "Z czego powstaje marmur w procesie metamorfizmu?", options: ["Z piaskowca", "Z granitu", "Z wapienia", "Z gliny"], correct: 2 },
-                { q: "Który minerał otwiera skalę Mohsa (stopień 1)?", options: ["Gips", "Kwarc", "Talk", "Diament"], correct: 2 },
-                { q: "Skały osadowe okruchowe powstają z:", options: ["Zastygłej lawy", "Szczątków roślin", "Rozdrobnionych fragmentów starszych skał", "Wysokiego ciśnienia"], correct: 2 },
-                { q: "Sól kamienna to skała osadowa pochodzenia:", options: ["Organicznego", "Chemicznego", "Okruchowego", "Wulkanicznego"], correct: 1 },
-                { q: "Struktura skrytokrystaliczna jest charakterystyczna dla:", options: ["Bazaltu", "Granitu", "Gnejsu", "Węgla"], correct: 0 },
-                { q: "Czy każda skała może ulec przeobrażeniu (metamorfizmowi)?", options: ["Tak", "Nie"], correct: 0 }
+                { q: "Która skała jest magmowa głębinowa?", options: ["Bazalt", "Granit", "Wapień", "Marmur"], correct: 1 },
+                { q: "Z czego powstaje marmur?", options: ["Z piaskowca", "Z granitu", "Z wapienia", "Z gliny"], correct: 2 },
+                { q: "Który minerał ma 1 w skali Mohsa?", options: ["Gips", "Talk", "Kwarc", "Diament"], correct: 1 },
+                { q: "Bazalt to skała:", options: ["Wylewna", "Głębinowa", "Osadowa", "Metamorficzna"], correct: 0 },
+                { q: "Skały osadowe okruchowe powstają z:", options: ["Lawy", "Szczątków", "Fragmentów skał", "Ciśnienia"], correct: 2 }
             ]
         },
         {
@@ -318,19 +314,15 @@
             date: "Rozdział 2.3",
             icon: "fa-mountain-sun",
             content: `
-                <h2>Siły rzeźbiące naszą planetę</h2>
-                <p>Powierzchnia Ziemi jest polem nieustannej walki dwóch potężnych sił: <strong>procesów endogenicznych</strong> (wewnętrznych) oraz <strong>egzogenicznych</strong> (zewnętrznych). Procesy wewnętrzne czerpią energię z ciepła wnętrza Ziemi. To one odpowiadają za ruchy płyt litosfery, powstawanie gór (orogenezy), trzęsienia ziemi oraz wulkanizm. Dzięki nim powstają wielkie formy ukształtowania terenu, jak łańcuchy Himalajów czy rowy oceaniczne.</p>
-                <p>Z kolei procesy zewnętrzne działają destrukcyjnie i wyrównująco. Kluczowym elementem jest <strong>wietrzenie</strong> – proces rozpadu skał pod wpływem czynników fizycznych (zmiany temperatury, mróz), chemicznych (woda, tlen) lub biologicznych. Kolejnym etapem jest <strong>erozja</strong> (niszczenie przez wodę, wiatr czy lodowce), transport materiału i jego <strong>akumulacja</strong> (osadzanie) w obniżeniach terenu.</p>
-                <p>Niezwykle widowiskowe są procesy rzeźbotwórcze rzek, które w górnym biegu wycinają głębokie doliny w kształcie litery V, a w dolnym tworzą delty. Pustynie z kolei są modelowane przez eoliczne (wiatrowe) procesy korazji i deflacji. Zrozumienie tych mechanizmów pozwala nam przewidywać zagrożenia, takie jak osuwiska czy powodzie.</p>
+                <h2>Siły rzeźbiące planetę</h2>
+                <p>Procesy <strong>endogeniczne</strong> (wewnętrzne): wulkanizm, ruchy płyt, trzęsienia ziemi. Procesy <strong>egzogeniczne</strong> (zewnętrzne): wietrzenie, erozja, akumulacja.</p>
             `,
             questions: [
-                { q: "Który proces zaliczamy do endogenicznych?", options: ["Wietrzenie", "Wulkanizm", "Erozja rzeczna", "Deflacja"], correct: 1 },
-                { q: "Dolina w kształcie litery U jest wynikiem działania:", options: ["Rzeki", "Wiatru", "Lodowca górskiego", "Fali morskiej"], correct: 2 },
-                { q: "Rozpad skały pod wpływem zamarzającej wody w szczelinach to:", options: ["Wietrzenie mrozowe", "Korozja", "Metamorfizm", "Akumulacja"], correct: 0 },
-                { q: "Orogeneza to proces:", options: ["Niszczenia skał", "Powstawania gór", "Wybuchu wulkanu", "Osadzania piasku"], correct: 1 },
-                { q: "Wywiwanie drobnego materiału przez wiatr to:", options: ["Korazja", "Deflacja", "Abrazja", "Eksfoliacja"], correct: 1 },
-                { q: "Gdzie energia procesów egzogenicznych ma swoje główne źródło?", options: ["W jądrze Ziemi", "W Słońcu", "W Księżycu", "W polu magnetycznym"], correct: 1 },
-                { q: "Proces osadzania materiału skalnego to:", options: ["Erozja", "Denudacja", "Akumulacja", "Transport"], correct: 2 }
+                { q: "Który proces jest endogeniczny?", options: ["Wietrzenie", "Wulkanizm", "Erozja", "Deflacja"], correct: 1 },
+                { q: "Dolina U-kształtna to wynik:", options: ["Rzeki", "Wiatru", "Lodowca", "Morza"], correct: 2 },
+                { q: "Orogeneza to powstawanie:", options: ["Skał", "Gór", "Wód", "Gleb"], correct: 1 },
+                { q: "Deflacja to wywiewanie materiału przez:", options: ["Wodę", "Wiatr", "Lód", "Ludzi"], correct: 1 },
+                { q: "Osadzanie materiału to:", options: ["Erozja", "Transport", "Akumulacja", "Wietrzenie"], correct: 2 }
             ]
         },
         {
@@ -339,19 +331,15 @@
             date: "Rozdział 3.1",
             icon: "fa-cloud",
             content: `
-                <h2>Powietrzna tarcza Ziemi</h2>
-                <p>Atmosfera to gazowa powłoka Ziemi, bez której życie nie mogłoby istnieć. Składa się głównie z <strong>azotu (78%)</strong> oraz <strong>tlenu (21%)</strong>. Pozostały 1% to argon, dwutlenek węgla i inne gazy śladowe. Atmosfera chroni nas przed promieniowaniem UV, zapewnia odpowiednią temperaturę dzięki efektowi cieplarnianemu i dostarcza gazów niezbędnych do oddychania.</p>
-                <p>Budowa atmosfery jest warstwowa. Najniższa i najważniejsza dla nas to <strong>troposfera</strong> – tu zachodzą wszystkie zjawiska pogodowe, a temperatura spada wraz z wysokością (średnio o 0,6°C na 100 metrów). Powyżej znajduje się <strong>stratosfera</strong>, w której mieści się warstwa ozonowa (ozonosfera), pochłaniająca zabójcze promieniowanie słoneczne. Kolejne to mezosfera, termosfera i egzosfera, która płynnie przechodzi w przestrzeń kosmiczną.</p>
-                <p>Ciśnienie atmosferyczne to ciężar słupa powietrza naciskający na powierzchnię Ziemi. Jego standardowa wartość na poziomie morza to 1013,25 hPa. Różnice ciśnień wywołują poziomy ruch powietrza, czyli <strong>wiatr</strong>, który zawsze wieje z wyżu do niżu barycznego.</p>
+                <h2>Powłoka gazowa</h2>
+                <p>Skład: <strong>Azot (78%)</strong>, <strong>Tlen (21%)</strong>. Warstwy: Troposfera (pogoda), Stratosfera (ozon), Mezosfera, Termosfera, Egzosfera.</p>
             `,
             questions: [
-                { q: "Który gaz dominuje w składzie atmosfery?", options: ["Tlen", "Azot", "Argon", "CO2"], correct: 1 },
-                { q: "W której warstwie zachodzą zjawiska pogodowe?", options: ["Stratosfera", "Mezosfera", "Troposfera", "Termosfera"], correct: 2 },
-                { q: "Gdzie znajduje się warstwa ozonowa?", options: ["W troposferze", "W stratosferze", "W egzosferze", "W jądrze"], correct: 1 },
-                { q: "O ile stopni średnio spada temperatura co 100m w troposferze?", options: ["1°C", "0,6°C", "2°C", "0,1°C"], correct: 1 },
-                { q: "Wiatr zawsze wieje z:", options: ["Niżu do wyżu", "Wyżu do niżu", "Północy na południe", "Wschodu na zachód"], correct: 1 },
-                { q: "Standardowe ciśnienie na poziomie morza wynosi ok.:", options: ["1000 hPa", "1013 hPa", "980 hPa", "1050 hPa"], correct: 1 },
-                { q: "Zjawisko zorzy polarnej występuje głównie w:", options: ["Troposferze", "Termosferze", "Stratosferze", "Mezosferze"], correct: 1 }
+                { q: "Gaz dominujący w atmosferze:", options: ["Tlen", "Azot", "Argon", "CO2"], correct: 1 },
+                { q: "Warstwa z ozonem to:", options: ["Troposfera", "Stratosfera", "Mezosfera", "Termosfera"], correct: 1 },
+                { q: "Wiatr wieje z:", options: ["Niżu do wyżu", "Wyżu do niżu", "Północy", "Zachodu"], correct: 1 },
+                { q: "Gdzie zachodzi pogoda?", options: ["Egzosfera", "Troposfera", "Stratosfera", "Mezosfera"], correct: 1 },
+                { q: "Ciśnienie standardowe (hPa):", options: ["1000", "1013", "980", "1050"], correct: 1 }
             ]
         },
         {
@@ -360,19 +348,87 @@
             date: "Rozdział 3.2",
             icon: "fa-temperature-high",
             content: `
-                <h2>Pogoda a klimat</h2>
-                <p>Często mylimy te dwa pojęcia. <strong>Pogoda</strong> to chwilowy stan atmosfery w danym miejscu, natomiast <strong>klimat</strong> to wieloletni (minimum 30-letni) reżim pogodowy ustalony na podstawie systematycznych obserwacji. Na klimat wpływa wiele czynników: szerokość geograficzna (kąt padania promieni słonecznych), rozmieszczenie lądów i oceanów, prądy morskie, wysokość nade poziom morza oraz rzeźba terenu.</p>
-                <p>Najpopularniejsza klasyfikacja klimatyczna dzieli Ziemię na strefy: równikową, zwrotnikową, podzwrotnikową, umiarkowaną i okołobiegunową. W strefie równikowej panują wysokie temperatury i codzienne opady (deszcze zenitalne). W strefach zwrotnikowych często występują pustynie ze względu na zstępujące prądy powietrza. Klimat umiarkowany, w którym leży Polska, charakteryzuje się wyraźną sezonowością.</p>
-                <p>Ogromny wpływ na klimat mają <strong>prądy morskie</strong>. Ciepłe prądy (np. Prąd Północnoatlantycki) ogrzewają i nawilżają wybrzeża, natomiast prądy zimne (np. Prąd Benguelski) przyczyniają się do powstawania pustyń mglistych na wybrzeżach. Obecnie stoimy przed wyzwaniem globalnego ocieplenia, które zmienia granice tych stref i powoduje ekstremalne zjawiska pogodowe.</p>
+                <h2>Pogoda vs Klimat</h2>
+                <p>Klimat to wieloletni stan pogody (min. 30 lat). Czynniki: szerokość geogr., prądy morskie, wysokość n.p.m.</p>
             `,
             questions: [
-                { q: "Jaki jest minimalny okres obserwacji do określenia klimatu?", options: ["1 rok", "10 lat", "30 lat", "100 lat"], correct: 2 },
-                { q: "Deszcze zenitalne są charakterystyczne dla strefy:", options: ["Zwrotnikowej", "Równikowej", "Umiarkowanej", "Okołobiegunowej"], correct: 1 },
-                { q: "Ciepły prąd morski płynący obok Europy to:", options: ["Prąd Labradorski", "Prąd Północnoatlantycki", "Prąd Peruwiański", "Prąd Benguelski"], correct: 1 },
-                { q: "Polska leży w strefie klimatów:", options: ["Podzwrotnikowych", "Zwrotnikowych", "Umiarkowanych", "Okołobiegunowych"], correct: 2 },
-                { q: "Głównym czynnikiem klimatotwórczym decydującym o strefowości jest:", options: ["Wysokość n.p.m.", "Szerokość geograficzna", "Prądy morskie", "Roślinność"], correct: 1 },
-                { q: "Klimat kontynentalny w porównaniu do morskiego cechuje się:", options: ["Małymi amplitudami temp.", "Dużymi amplitudami temp.", "Brakiem zimy", "Dużymi opadami"], correct: 1 },
+                { q: "Ile lat obserwacji wymaga klimat?", options: ["1", "10", "30", "100"], correct: 2 },
+                { q: "Deszcze zenitalne występują w strefie:", options: ["Zwrotnikowej", "Równikowej", "Umiarkowanej", "Polarnej"], correct: 1 },
+                { q: "Prąd Północnoatlantycki jest:", options: ["Zimny", "Ciepły", "Głęboki", "Słodki"], correct: 1 },
+                { q: "Polska leży w klimacie:", options: ["Morskim", "Umiarkowanym", "Górskim", "Tropikalnym"], correct: 1 },
                 { q: "Monsun to wiatr:", options: ["Stały", "Lokalny", "Sezonowy", "Pustynny"], correct: 2 }
+            ]
+        },
+        {
+            id: 9,
+            title: "Wody na Ziemi (Hydrosfera)",
+            date: "Rozdział 4.1",
+            icon: "fa-droplet",
+            content: `
+                <h2>Błękitna Planeta i jej zasoby</h2>
+                <p>Ziemia jest nazywana błękitną planetą, ponieważ wody (hydrosfera) pokrywają aż 71% jej powierzchni. Jednak <strong>97,5% to wody słone</strong> w oceanach i morzach. Wody słodkie to zaledwie 2,5%, z czego większość uwięziona jest w lodowcach i lądolodach (Antarktyda, Grenlandia). Woda dostępna do bezpośredniego spożycia przez człowieka (rzeki, jeziora, płytkie wody podziemne) to zaledwie ułamek procenta wszystkich zasobów.</p>
+                <p>Woda na Ziemi jest w ciągłym ruchu, co nazywamy <strong>cyklem hydrologicznym</strong>. Składa się on z parowania (z oceanów i roślin – transpiracja), przemieszczania wilgoci w atmosferze, opadów oraz odpływu powierzchniowego i podziemnego. Oceany pełnią rolę gigantycznego magazynu ciepła, stabilizując klimat globu poprzez prądy morskie.</p>
+                <p>Ważnym elementem wód lądowych są rzeki i jeziora. Najdłuższą rzeką świata jest Nil (lub Amazonka, zależnie od przyjętego źródła), a najgłębszym jeziorem – Bajkał w Rosji. Wody podziemne stanowią kluczowe źródło wody pitnej, ale ich nadmierna eksploatacja prowadzi do obniżania poziomu zwierciadła wód (leje depresyjne). W dobie zmian klimatu racjonalne gospodarowanie wodą staje się największym wyzwaniem ludzkości.</p>
+            `,
+            questions: [
+                { q: "Ile % wody na Ziemi to wody słodkie?", options: ["97,5%", "2,5%", "71%", "10%"], correct: 1 },
+                { q: "Gdzie znajduje się najwięcej wody słodkiej?", options: ["W rzekach", "W lodowcach i lądolodach", "W jeziorach", "W atmosferze"], correct: 1 },
+                { q: "Proces parowania wody z roślin to:", options: ["Sublimacja", "Transpiracja", "Infiltracja", "Kondensacja"], correct: 1 },
+                { q: "Najgłębsze jezioro świata to:", options: ["Tanganika", "Jezioro Górne", "Bajkał", "Morze Martwe"], correct: 2 },
+                { q: "Największy ocean na Ziemi to:", options: ["Atlantycki", "Indyjski", "Arktyczny", "Spokojny"], correct: 3 },
+                { q: "Wsiąkanie wody w glebę nazywamy:", options: ["Infiltracją", "Ewapotranspiracją", "Retencją", "Kondensacją"], correct: 0 },
+                { q: "Zasolenie wód oceanicznych wyraża się w:", options: ["Procentach", "Promilach", "Kilogramach", "Stopniach"], correct: 1 },
+                { q: "Rzeka, która nie wysycha przez cały rok, to rzeka:", options: ["Epizodyczna", "Okresowa", "Stała", "Ufna"], correct: 2 },
+                { q: "Obszar, z którego wody spływają do jednego systemu rzecznego, to:", options: ["Dolina", "Dorzecze", "Zlewisko", "Dział wodny"], correct: 1 },
+                { q: "Prąd morski płynący od równika ku biegunom jest zazwyczaj:", options: ["Zimny", "Ciepły", "Słony", "Głęboki"], correct: 1 }
+            ]
+        },
+        {
+            id: 10,
+            title: "Gleby i Biosfera",
+            date: "Rozdział 4.2",
+            icon: "fa-leaf",
+            content: `
+                <h2>Żywa powłoka Ziemi</h2>
+                <p><strong>Pedosfera</strong> (powłoka glebowa) powstaje na styku wszystkich pozostałych sfer Ziemi. Proces powstawania gleby, czyli pedogeneza, trwa setki lat. Gleba składa się z części mineralnej (rozdrobniona skała macierzysta), organicznej (próchnica/humus), wody oraz powietrza. Najżyźniejszą glebą świata jest <strong>czarnoziem</strong>, powstający na podłożu lessowym przy udziale bogatej roślinności trawiastej.</p>
+                <p>Wraz z glebami nierozerwalnie związana jest <strong>biosfera</strong>, czyli świat roślin i zwierząt. Na Ziemi występuje wyraźna strefowość roślinna, ściśle powiązana ze strefami klimatycznymi. Od równika ku biegunom spotykamy: wilgotne lasy równikowe, sawanny, pustynie, twardolistną roślinność śródziemnomorską, lasy liściaste i mieszane, tajgę (lasy iglaste), tundrę oraz pustynie lodowe.</p>
+                <p>W górach strefowość zastąpiona jest przez piętrowość. Wraz ze wzrostem wysokości zmieniają się warunki klimatyczne, co wymusza zmianę roślinności (np. w Tatrach od regla dolnego po turnie). Ochrona bioróżnorodności jest kluczowa, gdyż zniszczenie jednego ogniwa w ekosystemie może prowadzić do nieodwracalnych zmian w całej biosferze.</p>
+            `,
+            questions: [
+                { q: "Najżyźniejsza gleba świata to:", options: ["Bielica", "Czarnoziem", "Gleba cynamonowa", "Tundra"], correct: 1 },
+                { q: "Główny składnik organiczny gleby to:", options: ["Piasek", "Ił", "Próchnica (humus)", "Powietrze"], correct: 2 },
+                { q: "Tajga to lasy:", options: ["Liściaste", "Mieszane", "Iglaste", "Namorzynowe"], correct: 2 },
+                { q: "Roślinność charakterystyczna dla klimatu śródziemnomorskiego to:", options: ["Makia", "Stepy", "Pampas", "Tundra"], correct: 0 },
+                { q: "W jakim klimacie powstają gleby laterytowe (czerwonoziemy)?", options: ["Umiarkowanym", "Równikowym", "Pustynnym", "Okołobiegunowym"], correct: 1 },
+                { q: "Proces wymywania składników w głąb gleby to:", options: ["Akumulacja", "Eluwiacja", "Erozja", "Wietrzenie"], correct: 1 },
+                { q: "Piętra roślinne w górach wynikają ze zmiany:", options: ["Szerokości geogr.", "Wysokości n.p.m.", "Długości geogr.", "Zasolenia"], correct: 1 },
+                { q: "Formacja roślinna złożona z traw i pojedynczych drzew (np. akacji) to:", options: ["Step", "Sawanna", "Tajga", "Puszcza"], correct: 1 },
+                { q: "Skała, na której tworzy się gleba, to:", options: ["Skała macierzysta", "Skała osadowa", "Skała bazowa", "Skała twarda"], correct: 0 },
+                { q: "Która strefa roślinna jest najbardziej wysunięta na północ?", options: ["Tajga", "Tundra", "Lasy mieszane", "Sawanna"], correct: 1 }
+            ]
+        },
+        {
+            id: 11,
+            title: "Ludność świata",
+            date: "Rozdział 5.1",
+            icon: "fa-users",
+            content: `
+                <h2>Demografia i rozmieszczenie ludzi</h2>
+                <p>Liczba ludności świata przekroczyła już 8 miliardów. Rozmieszczenie ludzi na Ziemi jest bardzo nierównomierne – decydują o tym czynniki przyrodnicze (dostęp do wody, klimat, rzeźba terenu) oraz społeczno-ekonomiczne. Największe skupiska ludności to Azja Wschodnia (Chiny), Azja Południowa (Indie) oraz Europa Zachodnia i Środkowa.</p>
+                <p>Kluczowym pojęciem jest <strong>przyrost naturalny</strong> – różnica między liczbą urodzeń a liczbą zgonów. W krajach rozwijających się (np. w Afryce) obserwujemy eksplozję demograficzną, natomiast w krajach wysoko rozwiniętych (np. Niemcy, Polska, Japonia) występuje regres demograficzny i starzenie się społeczeństw. Proces ten ilustrują piramidy wieku i płci.</p>
+                <p>Migracje, czyli przemieszczanie się ludności, dzielimy na wewnętrzne i zewnętrzne oraz na emigrację (wyjazd) i imigrację (przyjazd). Główne przyczyny migracji to poszukiwanie pracy (ekonomiczne), wojny (polityczne) oraz katastrofy naturalne. Wielokulturowość staje się cechą charakterystyczną współczesnych społeczeństw, niosąc ze sobą zarówno korzyści, jak i wyzwania integracyjne.</p>
+            `,
+            questions: [
+                { q: "Liczba ludności świata wynosi obecnie ok.:", options: ["1 mld", "5 mld", "8 mld", "12 mld"], correct: 2 },
+                { q: "Przyrost naturalny to:", options: ["Urodzenia + Zgony", "Urodzenia - Zgony", "Imigracja - Emigracja", "Liczba dzieci"], correct: 1 },
+                { q: "W jakim kraju występuje regres demograficzny?", options: ["Nigeria", "Indie", "Niemcy", "Etiopia"], correct: 2 },
+                { q: "Najludniejszym kontynentem świata jest:", options: ["Afryka", "Europa", "Azja", "Ameryka Płn."], correct: 2 },
+                { q: "Osoba wyjeżdżająca z kraju to:", options: ["Imigrant", "Emigrant", "Repatriant", "Uchodźca"], correct: 1 },
+                { q: "Gęstość zaludnienia mierzymy w osobach na:", options: ["100 metrów", "1 km²", "1 miasto", "1 kraj"], correct: 1 },
+                { q: "Eksplozja demograficzna dotyczy głównie krajów:", options: ["Bogatych", "Słabo rozwiniętych", "Wyspiarskich", "Zimnych"], correct: 1 },
+                { q: "Który czynnik najbardziej przyciąga osadnictwo?", options: ["Wysokie góry", "Pustynie", "Dostęp do wody i żyzne gleby", "Gęste lasy"], correct: 2 },
+                { q: "Piramida wieku o szerokiej podstawie oznacza:", options: ["Młode społeczeństwo", "Stare społeczeństwo", "Brak dzieci", "Wysoki poziom medycyny"], correct: 0 },
+                { q: "Saldo migracji to różnica między:", options: ["Urodzeniami a zgonami", "Imigrantami a emigrantami", "Kobietami a mężczyznami", "Miastem a wsią"], correct: 1 }
             ]
         }
     ];
@@ -418,6 +474,7 @@
         currentLesson = lessonsData.find(l => l.id === id);
         document.getElementById('list-view').style.display = 'none';
         document.getElementById('lesson-view').style.display = 'block';
+        
         document.getElementById('lesson-content').innerHTML = currentLesson.content;
         
         const quizContainer = document.getElementById('quiz-container');
@@ -426,7 +483,7 @@
         currentLesson.questions.forEach((q, qIdx) => {
             const qBox = document.createElement('div');
             qBox.className = 'question-box';
-            qBox.innerHTML = `<p><strong>Q${qIdx+1}:</strong> ${q.q}</p>
+            qBox.innerHTML = `<p><strong>Pytanie ${qIdx+1}:</strong> ${q.q}</p>
                 <div class="options">
                     ${q.options.map((opt, oIdx) => `
                         <label class="option-label">
@@ -455,9 +512,9 @@
         
         questions.forEach((q, qIdx) => {
             const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
-            const inputs = document.querySelectorAll(`input[name="q${qIdx}"]`);
+            const labels = document.querySelectorAll(`input[name="q${qIdx}"]`);
             
-            inputs.forEach(input => {
+            labels.forEach(input => {
                 const label = input.parentElement;
                 const val = parseInt(input.value);
                 
@@ -474,16 +531,15 @@
         const percent = (score / questions.length) * 100;
         const msg = document.getElementById('result-msg');
         msg.style.display = 'block';
-        msg.scrollIntoView({ behavior: 'smooth' });
 
-        if(percent >= 80) {
+        if(percent >= 60) {
             msg.innerHTML = `<span style="color:var(--success)">Zaliczone! ✅ Wynik: ${score}/${questions.length}</span>`;
             if(!unlockedLessons.includes(currentLesson.id + 1) && currentLesson.id < lessonsData.length) {
                 unlockedLessons.push(currentLesson.id + 1);
                 localStorage.setItem('geo_unlocked', JSON.stringify(unlockedLessons));
             }
         } else {
-            msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 80%)</span>`;
+            msg.innerHTML = `<span style="color:var(--error)">Spróbuj ponownie ❌ Wynik: ${score}/${questions.length} (wymagane 60%)</span>`;
         }
 
         document.getElementById('check-btn').style.display = 'none';
