@@ -279,9 +279,11 @@
             icon: "fa-volcano",
             content: `
                 <h2>Warstwy Ziemi</h2>
-                <p>1. <strong>Skorupa ziemska</strong>: Najbardziej zewnętrzna warstwa. Dzieli się na kontynentalną i oceaniczną.</p>
-                <p>2. <strong>Płaszcz Ziemi</strong>: Stanowi ok. 80% objętości planety.</p>
-                <p>3. <strong>Jądro Ziemi</strong>: Składa się głównie z żelaza i niklu. Jądro zewnętrzne jest płynne, a wewnętrzne stałe.</p>
+                <p>Wnętrze naszej planety składa się z koncentrycznych warstw różniących się właściwościami fizycznymi i składem chemicznym. Podział ten znamy głównie dzięki badaniom fal sejsmicznych.</p>
+                <p>1. <strong>Skorupa ziemska</strong>: Najbardziej zewnętrzna, sztywna warstwa. Dzieli się na kontynentalną (grubszą) i oceaniczną (cieńszą, ale gęstszą).<br>
+                2. <strong>Płaszcz Ziemi</strong>: Stanowi ok. 80% objętości planety. Dzieli się na płaszcz górny (z plastyczną astenosferą) i dolny.<br>
+                3. <strong>Jądro Ziemi</strong>: Składa się głównie z żelaza i niklu. Jądro zewnętrzne jest płynne, a wewnętrzne stałe (mimo ogromnej temperatury, ze względu na kolosalne ciśnienie).</p>
+                <p>Granice między warstwami nazywamy nieciągłościami (np. Moho między skorupą a płaszczem).</p>
             `,
             questions: [
                 { q: "Która warstwa jest płynna?", options: ["Skorupa", "Płaszcz górny", "Jądro zewnętrzne", "Jądro wewnętrzne"], correct: 2 },
@@ -297,15 +299,18 @@
             icon: "fa-gem",
             content: `
                 <h2>Skarby skorupy ziemskiej</h2>
-                <p><strong>Minerał</strong> to pierwiastek lub związek chemiczny powstały w sposób naturalny. <strong>Skała</strong> to naturalne skupisko minerałów.</p>
-                <p><strong>Skały magmowe</strong>: Powstają z magmy (np. granit) lub lawy (np. bazalt). <strong>Skały osadowe</strong>: Powstają przez gromadzenie materiału (np. piaskowiec, sól). <strong>Skały metamorficzne</strong>: Powstają pod wpływem ciśnienia (np. marmur).</p>
-            `,
-            questions: [
-                { q: "Która skała jest magmowa głębinowa?", options: ["Bazalt", "Granit", "Wapień", "Marmur"], correct: 1 },
-                { q: "Z czego powstaje marmur?", options: ["Z piaskowca", "Z granitu", "Z wapienia", "Z gliny"], correct: 2 },
-                { q: "Który minerał ma 1 w skali Mohsa?", options: ["Gips", "Talk", "Kwarc", "Diament"], correct: 1 },
-                { q: "Bazalt to skała:", options: ["Wylewna", "Głębinowa", "Osadowa", "Metamorficzna"], correct: 0 },
-                { q: "Skały osadowe okruchowe powstają z:", options: ["Lawy", "Szczątków", "Fragmentów skał", "Ciśnienia"], correct: 2 }
+        <p>Wszystko, co widzimy pod stopami – od monumentalnych Tatr po piasek na plaży – składa się z minerałów i skał. <strong>Minerał</strong> to pierwiastek lub związek chemiczny powstały w sposób naturalny, posiadający określoną strukturę krystaliczną (np. diament czy kwarc). <strong>Skała</strong> natomiast to naturalne skupisko jednego lub wielu minerałów.</p>
+        <p>Skały dzielimy na trzy główne grupy ze względu na ich genezę. <strong>Skały magmowe</strong> powstają w wyniku krzepnięcia magmy (głębinowe, np. granit o strukturze jawno-krystalicznej) lub lawy (wylewne, np. bazalt o strukturze skrytokrystalicznej). <strong>Skały osadowe</strong> tworzą się na powierzchni Ziemi poprzez gromadzenie się materiału. Mogą być okruchowe (piaskowiec), pochodzenia organicznego (węgiel, wapienie) lub chemicznego (sól kamienna). Trzecią grupą są <strong>skały metamorficzne</strong>, które powstają, gdy istniejące już skały zostają poddane ogromnemu ciśnieniu i temperaturze w głębi Ziemi, co zmienia ich strukturę (np. marmur powstały z wapienia).</p>
+        <p>Ciekawostką jest obieg materii w przyrodzie: każda skała może stać się inną w procesie cyklu skalnego. Co więcej, twardość minerałów określamy za pomocą 10-stopniowej skali Mohsa, gdzie 1 to miękki talk, a 10 to najtwardszy diament.</p>
+    `,
+    questions: [
+        { q: "Która skała jest przykładem skały magmowej głębinowej?", options: ["Bazalt", "Granit", "Wapień", "Marmur"], correct: 1 },
+        { q: "Z czego powstaje marmur w procesie metamorfizmu?", options: ["Z piaskowca", "Z granitu", "Z wapienia", "Z gliny"], correct: 2 },
+        { q: "Który minerał otwiera skalę Mohsa (stopień 1)?", options: ["Gips", "Kwarc", "Talk", "Diament"], correct: 2 },
+        { q: "Skały osadowe okruchowe powstają z:", options: ["Zastygłej lawy", "Szczątków roślin", "Rozdrobnionych fragmentów starszych skał", "Wysokiego ciśnienia"], correct: 2 },
+        { q: "Sól kamienna to skała osadowa pochodzenia:", options: ["Organicznego", "Chemicznego", "Okruchowego", "Wulkanicznego"], correct: 1 },
+        { q: "Struktura skrytokrystaliczna jest charakterystyczna dla:", options: ["Bazaltu", "Granitu", "Gnejsu", "Węgla"], correct: 0 },
+        { q: "Czy każda skała może ulec przeobrażeniu (metamorfizmowi)?", options: ["Tak", "Nie"], correct: 0 }
             ]
         },
         {
