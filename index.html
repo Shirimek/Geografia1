@@ -478,7 +478,7 @@
                 {q:"Czy internet jest częścią globalizacji?", options:["Tak","Nie"], correct:0},
                 {q:"Alterglobaliści to osoby:", options:["Popierające ją","Krytykujące ją"], correct:1}
             ]
-        }
+        },
         {
             id: 15,
             title: "Przeszłość geologiczna Ziemi",
@@ -720,62 +720,6 @@
             ]
         }
     ];
-    // Logika odblokowywania lekcji (zapisuje postęp w przeglądarce)
-let unlockedLessons = JSON.parse(localStorage.getItem('geo_unlocked')) || [1];
-
-// Funkcja wyświetlająca listę lekcji na stronie głównej
-function renderLessons() {
-    const list = document.getElementById('list-view');
-    list.innerHTML = lessonsData.map(lesson => {
-        const isLocked = !unlockedLessons.includes(lesson.id);
-        return `
-            <div class="lesson-card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : `showLesson(${lesson.id})`}">
-                <div class="lesson-icon"><i class="fas ${lesson.icon}"></i></div>
-                <div class="lesson-info">
-                    <h3>${lesson.title}</h3>
-                    <span>${lesson.date}</span>
-                </div>
-                ${isLocked ? '<i class="fas fa-lock status-icon"></i>' : '<i class="fas fa-chevron-right status-icon"></i>'}
-            </div>
-        `;
-    }).join('');
-    updateProgress();
-}
-
-// Funkcja otwierająca konkretną lekcję
-function showLesson(id) {
-    const currentLesson = lessonsData.find(l => l.id === id);
-    window.currentLesson = currentLesson; // Zapamiętaj aktywną lekcję
-    document.getElementById('list-view').style.display = 'none';
-    document.getElementById('lesson-view').style.display = 'block';
-    document.getElementById('lesson-content').innerHTML = currentLesson.content;
-    
-    // Generowanie quizu
-    const quizCont = document.getElementById('quiz-container');
-    quizCont.innerHTML = currentLesson.questions.map((q, qIdx) => `
-        <div class="question-box">
-            <p><strong>${qIdx + 1}. ${q.q}</strong></p>
-            <div class="options">
-                ${q.options.map((opt, oIdx) => `
-                    <label class="option-label">
-                        <input type="radio" name="q${qIdx}" value="${oIdx}"> ${opt}
-                    </label>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
-    
-    document.getElementById('result-msg').style.display = 'none';
-    document.getElementById('check-btn').style.display = 'block';
-    window.scrollTo(0,0);
-}
-
-// Funkcja powrotu do listy
-function showListView() {
-    document.getElementById('list-view').style.display = 'grid';
-    document.getElementById('lesson-view').style.display = 'none';
-    renderLessons();
-}
 
 // Funkcja sprawdzania quizu
 function checkQuiz() {
