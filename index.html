@@ -186,6 +186,14 @@
     <div>
         <h1>GeoMistrz <i class="fas fa-globe-europe"></i></h1>
         <p>Kurs Geografii Rozszerzona</p>
+        <nav style="margin-top:10px;">
+    <button onclick="showListView()" style="background:none;border:none;color:#38bdf8;cursor:pointer;margin-right:10px;">
+        📚 Lekcje
+    </button>
+    <button onclick="showMaturaView()" style="background:none;border:none;color:#38bdf8;cursor:pointer;">
+        📘 Zadania matura
+    </button>
+</nav>
     </div>
     <div style="text-align: right;">
         <span id="progress-text">Postęp: 0%</span>
@@ -197,6 +205,18 @@
 
 <div class="container">
     <div id="list-view" class="lesson-list"></div>
+    <div id="matura-view" style="display:none;">
+    <div class="content-body">
+        <h2>Zadania maturalne</h2>
+        <div id="matura-container"></div>
+
+        <button onclick="checkMatura()" id="check-btn">
+            Sprawdź odpowiedzi
+        </button>
+
+        <div id="matura-result"></div>
+    </div>
+</div>
 
     <div id="lesson-view" class="fade-in">
         <button class="back-btn" onclick="showListView()"><i class="fas fa-arrow-left"></i> Powrót do listy</button>
@@ -848,6 +868,63 @@
     }
 
     init();
+    function showMaturaView() {
+    document.getElementById("list-view").style.display = "none";
+    document.getElementById("lesson-view").style.display = "none";
+    document.getElementById("matura-view").style.display = "block";
+}
+
+function showListView() {
+    document.getElementById("list-view").style.display = "grid";
+    document.getElementById("lesson-view").style.display = "none";
+    document.getElementById("matura-view").style.display = "none";
+}
+    const maturaTasks = [
+    {
+        question: "Twoje pytanie?",
+        options: ["A", "B", "C", "D"],
+        correct: 0
+    }
+];
+    function renderMatura() {
+    const container = document.getElementById("matura-container");
+    container.innerHTML = "";
+
+    maturaTasks.forEach((task, index) => {
+        let optionsHTML = "";
+
+        task.options.forEach((opt, i) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="matura-${index}" value="${i}">
+                    ${opt}
+                </label>
+            `;
+        });
+
+        container.innerHTML += `
+            <div class="question-box">
+                <p><strong>${index + 1}. ${task.question}</strong></p>
+                ${optionsHTML}
+            </div>
+        `;
+    });
+}
+    function checkMatura() {
+    let score = 0;
+
+    maturaTasks.forEach((task, index) => {
+        const selected = document.querySelector(`input[name="matura-${index}"]:checked`);
+
+        if (selected && parseInt(selected.value) === task.correct) {
+            score++;
+        }
+    });
+
+    document.getElementById("matura-result").innerText =
+        `Twój wynik: ${score} / ${maturaTasks.length}`;
+}
+    renderMatura();
 </script>
 </body>
 </html>
